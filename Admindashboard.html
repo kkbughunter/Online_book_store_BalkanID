@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        .user-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 0;
+            background-color: rgba(255, 17, 0, 0.384);
+            border-radius: 12px;
+        }
+
+        .logout-button {
+            margin-left: auto; 
+        }
+        table {
+            margin: 12px;
+        }
+        .container{
+            margin: 30px;
+            border-radius: 5%;
+            background-color: aqua;
+            width: 450px;
+        }
+        .removediv{
+            margin: 3%;
+            background-color: rgb(184, 133, 231);
+            border-radius: 3cap;
+            padding: 12px;
+        }
+    </style>
+</head>
+<body style="background-color: rgba(231, 114, 192, 0.178);">
+    <div class="user-info">
+        <h2>Welcome, {{.User.Name}}</h2>
+        <div class="logout-button">
+            <form id="logoutForm" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <form action="/add-book" method="POST" id="addBookForm">
+            <table>
+                <tr>
+                    <td><label for="ISBN">ISBN Number</label></td>
+                    <td style="padding: 6px;"><input class="form-control" type="number" id="f1" name="ISBN" required></td>
+                </tr>
+                <tr>
+                    <td><label for="title">Title</label></td>
+                    <td style="padding: 6px;"><input class="form-control" type="text" id="f1" name="title" required></td>
+                </tr>
+                <tr>
+                    <td><label for="author">Author</label></td>
+                    <td style="padding: 6px;"><input class="form-control"type="text" id="f1" name="author" required></td>
+                </tr>
+                <tr>
+                    <td><label for="genre">Genre</label></td>
+                    <td style="padding: 6px;"><input class="form-control"type="text" id="f1" name="genre" required></td>
+                </tr>
+                <tr>
+                    <td><label for="publisher">Publisher</label></td>
+                    <td style="padding: 6px;"><input class="form-control"type="text" id="f1" name="publisher" required></td>
+                </tr>
+                <tr>
+                    <td><label for="releasedata">Release Data</label></td>
+                    <td style="padding: 6px;"><input class="form-control"type="date" id="f1" name="releasedata" required></td>
+                </tr>
+                <tr>
+                    <td><label for="price">price</label></td>
+                    <td style="padding: 6px;"><input class="form-control"type="number" id="f1" name="price" required></td>
+                </tr>
+                <tr >
+                    <td><label for="stock">Stock</label></td>
+                    <td style="padding: 6px;"><input class="form-control"type="number" id="f1"name="stock" required></td>
+                </tr>
+                <tr align=center><td><button type="reset" class="btn btn-default">Reset</button></td>
+                    <td><button type="submit" id="f1" class="btn btn-default">Add</button></td>
+            </table>
+        </form>
+                
+    </div>
+    <div class="removediv">
+        <h1>Remove Book from Store</h1>
+        <form action="/remove-book" method="POST" id="removeBookForm">
+            <label for="ISBN">ISBN Number</label>
+            <input class="form-control" type="number" name="ISBN" required>
+            <br>
+            <button type="submit" id="f2" class="btn btn-default" style="background-color: red; font-weight: bolder;">Remove</button>
+        </form>
+        
+        <!-- Error message placeholder -->
+        <div id="errorMessage" style="color: red;"></div>
+    </div>
+    <script>
+        document.getElementById('logoutForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var userName = "{{.User.Name}}";
+            this.action = "/logout?user=" + userName;
+            this.submit();
+        });
+        document.getElementById('addBookForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var userName = "{{.User.Name}}";
+            this.action = "/add-book?user=" + userName;
+            this.submit();
+        });
+        document.getElementById('removeBookForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var userName = "{{.User.Name}}";
+            this.action = "/remove-book?user=" + userName;
+            this.submit();
+        });
+    </script>
+</body>
+</html>
