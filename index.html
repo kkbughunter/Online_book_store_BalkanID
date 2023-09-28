@@ -1,55 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Page</title>
-    <style>
-        body{
-            background-image: url("images/bookstorebg.jpg");
-            height: 100%; 
-
-            background-repeat: no-repeat;
-            background-size: cover;
-
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            
-        }
-        .content{
-            height: auto;
-            width: 40%;
-            color: black;
-            padding: 5%;
-            border-radius: 5%;
-            margin-top: 7%;
-            margin-left: 45%;
-            background-color: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(5px);
-        }
-        .head{
-            margin-left: 25%;
-            font-weight: 400;
-        }
-        .content form label, input{
-            padding: 4px;
-            font-weight: bolder;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalkanID | Login</title>
+    <link rel="stylesheet" href="static/FEstyle/mlpstyle.css">
 </head>
-<body>
-    <div class="content">
+<body style="background-image: url(static/images/bookstorebg.jpg);">
+    <div class="content" >
         <div class="head">
             <h1>Login</h1>
             <p style="font-weight: bolder; margin-left: -15%;">BalkanID Online Book Store</p> 
         </div> <br>
-        <form action="/add" method="post" >
-            <label for="name">User Name</label>
-            <input type="text" id="name" name="name" required>
-            <br><br><br>
-            <label for="name">User Password</label>
-            <input type="text" id="password" name="id" required>
-            <br><br><br>
-            <input type="submit" value="     Login    " style="padding: 2%;background-color: burlywood; border: 0cap; cursor: pointer; margin-left: 35%;">
+        <form action="/login" method="post" >
+            <label for="name">
+                <p>User Name</p>
+                <input type="text" id="name" name="name" required>
+            </label>
+            
+            <label for="name">
+                <p>Password</p> 
+                <input type="password" id="password" name="password" required>
+            </label>
+            
+            <br>
+            <p>Don't have an account? <a href="register.html" style="text-decoration: none;">Sign Up</a></p>
+            <input type="submit" value="Login" style="width: 30%; padding: 2%;background-color: burlywood; border: 0cap; cursor: pointer; margin-left: 25%;">
         </form>
+         <!-- Display the error message. -->
+    <div class="error-section" style="color: red; font-weight: bolder;">
+        {{if .Errors}}
+        <div class="error">
+            {{range .Errors}}
+            {{.}}
+            {{end}}
+        </div>
+        {{end}}
     </div>
-    
+    <!-- End of the error display -->
+    </div>
+   
 </body>
 </html>
