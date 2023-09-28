@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <style>
+        .user-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 0;
+            background-color: rgba(0, 255, 98, 0.575);
+            border-radius: 12px;
+        }
+
+        .logout-button {
+            margin-left: auto; 
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: rgba(171, 231, 114, 0.178);">
+    <div class="user-info">
+        <h2>Welcome, {{.User.Name}}</h2>
+        <div class="logout-button">
+            <form id="logoutForm" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+    
+   <div class="tabl"> <table class="table table-striped">
+    <tr>
+        <th>ISBN</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Publisher</th>
+        <th>Format</th>
+        <th>Price</th>
+        <th>Stock</th>
+    </tr>
+    <!-- {{range .Books}} -->
+    <tr>
+        <td>{{.ISBN}}</td>
+        <td>{{.Title}}</td>
+        <td>{{.Author}}</td>
+        <td>{{.Genre}}</td>
+        <td>{{.Publisher}}</td>
+        <td>{{.Format}}</td>
+        <td>{{.Price}}</td>
+        <td>{{.Stock}}</td>
+        <td><button class="btn btn-danger delete-button" data-isbn="{{.ISBN}}">Order</button></td>
+    </tr>
+    <!-- {{end}} -->
+</table></div>
+
+    <script>
+        document.getElementById('logoutForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var userName = "{{.User.Name}}";
+            this.action = "/logout?user=" + userName;
+            this.submit();
+        });
+    </script>
+    <script>
+        // Add an event listener for the delete buttons
+        var deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var isbn = this.getAttribute('data-isbn');
+                if (confirm('Are you sure you want to delete this book?')) {
+                    // Send a request to the server to delete the book with the given ISBN
+                    fetch('/delete-book?isbn=' + isbn+"&user="+name, {
+                        method: 'DELETE',
+                    })
+                    .then(function(response) {
+                        if (response.ok) {
+                            // Book deleted successfully, remove the row from the table
+                        } else {
+                            alert('Failed to delete the book.');
+                        }
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error('Error:', error);
+                    });
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>

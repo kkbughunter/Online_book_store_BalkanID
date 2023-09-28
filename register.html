@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BalkanID | Register</title>
+    <link rel="stylesheet" href="static/FEstyle/mlpstyle.css">
+</head>
+<body style="background-image: url(static/images/regbg.jpg);">
+    <div class="content">
+        <div class="head">
+            <h1>Register</h1>
+            <p style="font-weight: bolder; margin-left: -15%;">BalkanID Online Book Store</p>
+        </div>
+        <form action="/reg" method="post">
+            <label for="name">
+                <p>UserName</p>
+                <input type="text" id="name" name="name" placeholder="Name" required>
+            </label>
+            <label for="email">
+                <p>Email ID</p>
+                <input type="text" id="email" name="email" placeholder="example@xyz.com" required>
+            </label>
+            <label for="password">
+                <p>Password</p>
+                <input type="password" id="password" name="password" placeholder="a-z, A-Z, 1-9, @#!" required>
+            </label>
+            <label for="confirm">
+                <p>Confirm Password</p>
+                <input type="password" id="confirm" name="confirm" placeholder="a-z, A-Z, 1-9, @#!" required>
+            </label>
+            <p>i already have an account? <a href="index.html" style="text-decoration: none;">Login</a></p>
+
+            <input type="submit" value="Register" class="btn">
+        </form>
+
+        <!-- Display the error message. -->
+        <div class="error-section" style="color: red; font-weight: bolder;">
+            {{if .Errors}}
+            <div class="error">
+                {{range .Errors}}
+                {{.}}
+                {{end}}
+            </div>
+            {{end}}
+        </div>
+        <!-- End of the error display -->
+
+    </div>
+    <div style="padding: 50px;"></div>
+</body>
+</html>
